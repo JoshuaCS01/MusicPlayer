@@ -1,6 +1,6 @@
 # Musio – Local Music Player App
 
-BeatBox is a simple yet powerful music player built with **React Native** and **Expo**. It plays local audio files from your device and features playback controls using `react-native-track-player`.
+Musio is a simple yet powerful music player built with **React Native** and **Expo**. It plays local audio files from your device and features playback controls using `react-native-track-player`.
 
 ## 📱 Features
 
@@ -26,4 +26,4 @@ BeatBox is a simple yet powerful music player built with **React Native** and **
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/yourusername/beatbox.git
-cd beatbox
+cd Musio
