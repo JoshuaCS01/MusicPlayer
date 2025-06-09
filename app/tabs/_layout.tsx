@@ -1,6 +1,5 @@
-import { Tabs } from 'expo-router';
-import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { Tabs } from 'expo-router';
 
 
 export default function TabLayout() {
@@ -8,6 +7,7 @@ export default function TabLayout() {
         <Tabs
             screenOptions={{
                 tabBarActiveTintColor: '#ffd33d',
+                tabBarInactiveTintColor: "white",
                 headerStyle: {
                     backgroundColor: '#white',
                 },
@@ -27,11 +27,11 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="about"
+                name="songs"
                 options={{
-                    title: 'About',
+                    title: 'Songs',
                     tabBarIcon: ({ color, focused }) => (
-                        <Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={24} />
+                        <Ionicons name={focused ? 'musical-notes-sharp' : 'musical-notes-outline'} color={color} size={24} />
                     ),
                 }}
             />
@@ -40,7 +40,7 @@ export default function TabLayout() {
                 options={{
                     title: 'Playlists',
                     tabBarIcon: ({ color, focused }) => (
-                        <SimpleLineIcons name="playlist" color={color} size={24}/>
+                        <Ionicons name={focused ? 'list-circle-sharp':'list-circle-outline'} color={color} size={24}/>
                     ),
                 }}
             />

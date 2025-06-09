@@ -1,12 +1,11 @@
-import { Stack, Link} from 'expo-router';
 import Feather from '@expo/vector-icons/Feather';
-import { Button, Text, Image, StyleSheet, View } from 'react-native';
-import { Background } from '@react-navigation/elements';
+import { Link, Stack } from 'expo-router';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 
 
 
-let color = "#ff459c"
+let color = "#261b27"
 
 
 function LogoTitle() {
@@ -19,9 +18,9 @@ function LogoTitle() {
       gap: "10",
       alignItems: "center"
     }}>
-      <Image style={styles.image} source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} />
-        <Text>Musio</Text>
-        <Link href="./test" style={{marginLeft: "auto", color: "black"}}>
+      <Image style={styles.image} source={require('../assets/images/MusioLogo.png')} />
+        <Text style={{color: "white"}}>Musio</Text>
+        <Link href="../settings" style={{marginLeft: "auto", color: "white"}}>
         <Feather name="settings" size={24}/>
         </Link>
     </View>
