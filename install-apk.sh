@@ -6,7 +6,7 @@ PACKAGE_NAME="com.yourcompany.yourapp"  # Replace with your actual package name
 
 echo "🔧 Building APK locally..."
 rm *.apk  # Clean up any existing APK files
-eas build --platform android --profile preview --local
+eas build --profile development --platform android --local
 
 echo "📱 Connecting to device via ADB..."
 adb start-server
@@ -17,3 +17,7 @@ adb install -r $APK_PATH
 
 echo "🚀 Launching app..."
 adb shell monkey -p $PACKAGE_NAME -c android.intent.category.LAUNCHER 1
+
+
+echo "🚀 Starting Metro Bundler"
+npx expo start --dev-client --clear
