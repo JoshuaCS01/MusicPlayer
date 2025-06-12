@@ -25,5 +25,5 @@ MusicPlay is a simple yet powerful music player built with **React Native** and 
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/beatbox.git
+git clone https://github.com/yourusername/MusicPlay.git
 cd Musio
