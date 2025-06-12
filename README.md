@@ -1,6 +1,6 @@
-# Musio – Local Music Player App
+# MusicPlay – Local Music Player App
 
-Musio is a simple yet powerful music player built with **React Native** and **Expo**. It plays local audio files from your device and features playback controls using `react-native-track-player`.
+MusicPlay is a simple yet powerful music player built with **React Native** and **Expo**. It plays local audio files from your device and features playback controls using `react-native-track-player`.
 
 ## 📱 Features
 
