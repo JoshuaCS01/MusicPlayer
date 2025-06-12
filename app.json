@@ -4,7 +4,7 @@
     "slug": "MusicPlay",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/MusioLogo.png",
     "scheme": "musicplay",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -38,6 +38,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "9e85fdfa-0d6a-48d8-bae6-c7eb19e1e345"
+      }
     }
   }
 }
