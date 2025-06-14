@@ -11,16 +11,19 @@ function LogoTitle() {
 
   return (
     <View style={{
-      backgroundColor: color,
+      backgroundColor: "#525252",
       paddingTop: insets.top,
       paddingHorizontal: 12,
       flexDirection: "row",
       alignItems: "center",
+      justifyContent:"center",
       height: 60 + insets.top,
     }}>
+      <View style={{flexDirection:"row", alignItems:"center", transform: [{ translateX: 110}]}}>
       <Image style={styles.image} source={require('../../assets/images/MusioLogo.png')} />
       <Text style={{ color: "white", fontSize: 18, marginLeft: 8 }}>Musio</Text>
-      <Link href="../settings/" style={{ marginLeft: "auto" }}>
+      </View>
+      <Link href="../settings/" style={{marginLeft: "auto"}}>
         <Feather name="settings" size={24} color="white" />
       </Link>
     </View>
