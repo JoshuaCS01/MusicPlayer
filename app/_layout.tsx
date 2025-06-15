@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 import { StyleSheet } from 'react-native';
-
+import { PlaybackProvider } from './tabs/PlaybackContext';
 
 
 
@@ -9,7 +9,9 @@ let color = "#261b27"
 export default function RootLayout() {
 
 return( 
-  <Stack screenOptions={{ headerShown: false }} />
+  <PlaybackProvider>
+    <Stack screenOptions={{ headerShown: false }} />
+  </PlaybackProvider>
 );
 }
 

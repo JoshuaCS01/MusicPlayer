@@ -1,5 +1,3 @@
-// components/SongCard.tsx
-
 import { Feather } from '@expo/vector-icons'; // or any icon library
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -8,11 +6,11 @@ export default function SongCard({song}) {
     console.log(song.id)
     
   }
-  const halfWindowsWidth = Dimensions.get('window').width-20
+  const ScreenWidth = Dimensions.get('window').width-20
 
 
   return (
-    <View style={[styles.card, { width: halfWindowsWidth }]}>
+    <View style={[styles.card, { width: ScreenWidth }]}>
       <Image source={song.image} style={styles.image} />
       <View style={styles.info}>
         <Text style={styles.title}>{song.title}</Text>
