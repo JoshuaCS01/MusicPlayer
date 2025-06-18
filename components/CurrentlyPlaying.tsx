@@ -3,20 +3,30 @@ import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function CurrentlyPlayingCard({ song, isPlaying, onTogglePlay }) {
-const insets= useSafeAreaInsets();
-const width = insets.bottom + 60;
+  const insets = useSafeAreaInsets();
+  const width = insets.bottom + 60;
   if (!song) return null;
 
   return (
-    <View style={[styles.card, {bottom: width}]}>
+    <View style={[styles.card, { bottom: width }]}>
       <Image source={require("../assets/images/MusioLogo.png")} style={styles.image} />
-      <View style={styles.info}>
+      <View >
         <Text style={styles.title}>{song.title}</Text>
         <Text style={styles.artist}>{song.artist}</Text>
       </View>
-      <Pressable onPress= {onTogglePlay}>
-        <Ionicons name={isPlaying ? "pause": "play"} size={28} color="white" />
+      <View style={styles.selections}>
+      <Pressable onPress={onTogglePlay}>
+        <Ionicons name="play-skip-back" size={28} color="white" />
       </Pressable>
+      <Pressable onPress={onTogglePlay}>
+        <Ionicons style={{marginLeft:"25", marginRight: "25"}} name={isPlaying ? "pause" : "play"} 
+        size={28} color="white" 
+        />
+      </Pressable>
+      <Pressable onPress={onTogglePlay}>
+        <Ionicons name="play-skip-forward" size={28} color="white" />
+      </Pressable>
+      </View>
     </View>
   );
 }
@@ -39,7 +49,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   info: {
-    flex: 1,
+    flex: 1
   },
   title: {
     color: '#fff',
@@ -50,4 +60,9 @@ const styles = StyleSheet.create({
     color: '#bbb',
     fontSize: 14,
   },
+  selections:{
+    display:"flex",
+    flexDirection:"row",
+    marginLeft:"auto",
+  }
 });
