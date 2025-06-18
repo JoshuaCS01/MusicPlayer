@@ -1,13 +1,54 @@
 import { useRouter } from "expo-router";
 import { useEffect, useRef } from 'react';
-import { Animated, Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Animated, Button, Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+
+
+export const requestAudioPermission = async () => {
+  const permission = Platform.select({
+    android: Platform.Version >= 33
+      ? PERMISSIONS.ANDROID.READ_MEDIA_AUDIO
+      : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+    ios: PERMISSIONS.IOS.MEDIA_LIBRARY,
+  });
+
+  const result = await request(permission);
+  console.log('Permission result:', result);
+
+  if (result === RESULTS.GRANTED) {
+    console.log('Permission granted!');
+  } else {
+    console.log('Permission not granted.');
+  }
+};
+
 
 export default function Index() {
 
+  useEffect(() => {
+    requestAudioPermission();
+  }, []);
+
+  let content;
+  let bool = true
+  if (bool) {
+    content =
+      <>
+        <Text style={{ color: "white", transform: [{ translateY: 250 }] }}>Tap to continue</Text>
+      </>;
+
+  } else {
+    content =
+      <>
+        <Button title="request permissions" onPress={requestAudioPermission} />
+      </>;
+  }
+
   const insets = useSafeAreaInsets();
-  
-//navigation stuff
+
+  //navigation stuff
   const router = useRouter();
   const goToPlaylists = () => {
     router.push('./tabs/');
@@ -38,14 +79,14 @@ export default function Index() {
   return (
     <Pressable style={styles.container} onPress={goToPlaylists}>
       <View style={styles.container}>
-        <Animated.Text style={[ styles.baseText, { opacity: fadeAnim, transform: [{ translateX: slideAnim}]}]}>
+        <Animated.Text style={[styles.baseText, { opacity: fadeAnim, transform: [{ translateX: slideAnim }] }]}>
           Welcome to
         </Animated.Text>
-        <View style={{ flexDirection: "row", alignItems: "center"}}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Image style={styles.image} source={require('../assets/images/MusioLogo.png')} />
           <Text style={{ color: "white", fontSize: 50, marginLeft: 8 }}>Musio</Text>
         </View>
-        <Text style={{color: "white",transform: [{ translateY: 250}]}}>Tap to continue</Text>
+        <Text style={{ color: "white", transform: [{ translateY: 250 }] }}>Tap to continue</Text>
       </View>
     </Pressable >
   );
@@ -69,7 +110,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 70,
-    height:100,
+    height: 100,
   },
 });
 

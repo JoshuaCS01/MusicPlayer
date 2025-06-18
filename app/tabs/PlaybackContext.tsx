@@ -9,6 +9,7 @@ export const PlaybackProvider = ({ children }) => {
 
   const onTogglePlay = () => {
     setIsPlaying(prev => !prev);
+    console.log("ButtonPressed");
   };
 
 

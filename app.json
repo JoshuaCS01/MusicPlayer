@@ -9,14 +9,15 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.MusicPlay"
     },
     "android": {
-      "permissions":[
+      "permissions": [
+        "android.permission.READ_MEDIA_AUDIO",
         "READ_MEDIA_AUDIO",
-        "READ_EXTERNAL_STORAGE"  
+        "READ_EXTERNAL_STORAGE"
       ],
-      
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/MusioLogo.png",
         "backgroundColor": "#ffffff"
@@ -38,6 +39,15 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "react-native-permissions",
+        {
+          "permissions": [
+            "READ_MEDIA_AUDIO",
+            "READ_EXTERNAL_STORAGE"
+          ]
         }
       ]
     ],
