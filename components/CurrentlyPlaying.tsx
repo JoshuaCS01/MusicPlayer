@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function CurrentlyPlayingCard({ song, isPlaying, onTogglePlay }) {
@@ -10,22 +10,26 @@ export default function CurrentlyPlayingCard({ song, isPlaying, onTogglePlay }) 
   return (
     <View style={[styles.card, { bottom: width }]}>
       <Image source={require("../assets/images/MusioLogo.png")} style={styles.image} />
-      <View >
-        <Text style={styles.title}>{song.title}</Text>
+      <View style={styles.info}>
+        <View style={{ height: 15, overflow: "hidden" }}>
+        <ScrollView horizontal={true}>
+          <Text style={styles.title}>{song.title}</Text>
+        </ScrollView>
+        </View>
         <Text style={styles.artist}>{song.artist}</Text>
       </View>
       <View style={styles.selections}>
-      <Pressable onPress={onTogglePlay}>
-        <Ionicons name="play-skip-back" size={28} color="white" />
-      </Pressable>
-      <Pressable onPress={onTogglePlay}>
-        <Ionicons style={{marginLeft:"25", marginRight: "25"}} name={isPlaying ? "pause" : "play"} 
-        size={28} color="white" 
-        />
-      </Pressable>
-      <Pressable onPress={onTogglePlay}>
-        <Ionicons name="play-skip-forward" size={28} color="white" />
-      </Pressable>
+        <Pressable onPress={onTogglePlay}>
+          <Ionicons name="play-skip-back" size={28} color="white" />
+        </Pressable>
+        <Pressable onPress={onTogglePlay}>
+          <Ionicons style={{ marginLeft: "25", marginRight: "25" }} name={isPlaying ? "pause" : "play"}
+            size={28} color="white"
+          />
+        </Pressable>
+        <Pressable onPress={onTogglePlay}>
+          <Ionicons name="play-skip-forward" size={28} color="white" />
+        </Pressable>
       </View>
     </View>
   );
@@ -49,20 +53,24 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   info: {
-    flex: 1
+    maxHeight: 20,
+    maxWidth: '25%',
   },
   title: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 14,
+    textOverflow: "ellipsis",
+    transform: [{ translateY: -3 }],
+
   },
   artist: {
     color: '#bbb',
-    fontSize: 14,
+    fontSize: 12,
   },
-  selections:{
-    display:"flex",
-    flexDirection:"row",
-    marginLeft:"auto",
+  selections: {
+    display: "flex",
+    flexDirection: "row",
+    marginLeft: "auto",
   }
 });

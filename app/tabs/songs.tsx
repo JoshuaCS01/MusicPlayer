@@ -41,7 +41,7 @@ export default function SongsScreen() {
     content = <>
       <FlatList
         data={songs}
-        keyExtractor={(item) => item.id}
+        key={songs.id}
         renderItem={({ item }) => (
           <Pressable onPress={() => { handlePlay(item); console.log("pressed"); }}>
             <SongCard song={item} />
