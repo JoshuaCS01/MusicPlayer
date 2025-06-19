@@ -40,7 +40,7 @@ export default function TabLayout() {
 
   if (isPlaying || currentSong != null) {
     content = <>
-      <CurrentlyPlayingCard song={currentSong} isPlaying={undefined} onTogglePlay={null} />
+      <CurrentlyPlayingCard song={currentSong} isPlaying={isPlaying} onTogglePlay={onTogglePlay} />
     </>;
 
   } else {
