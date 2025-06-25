@@ -1,9 +1,9 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 
 export default function PlaylistsScreen() {
   return (
     <View  style={styles.container} >
-      <Text style={styles.text}>Playlists screen</Text>
+      <Button onPress={() => { console.log("Test"); } } title={"+ Import playlist"}></Button>
     </View>
   );
 }
