@@ -11,9 +11,14 @@ export default function SongsScreen() {
   const navigation = useNavigation();
   const [isThereSongs, setIsThereSongs] = useState(false);
   const { setCurrentSong } = usePlayback();
+  const {setAudioSource} = usePlayback();
+  const { player, isPlaying, setIsPlaying } = usePlayback();
 
-  const handlePlay = (song) => {
+  const handlePlay = async (song) => {
+    console.log(song.duration);
     setCurrentSong(song);
+    setAudioSource(song.path);
+    setIsPlaying(true);
   };
 
   const [songs, setSongs] = useState<MusicFile[]>([]);
@@ -43,7 +48,7 @@ export default function SongsScreen() {
         data={songs}
         key={songs.id}
         renderItem={({ item }) => (
-          <Pressable onPress={() => { handlePlay(item); console.log("pressed"); }}>
+          <Pressable onPress={() => { handlePlay(item);}}>
             <SongCard song={item} />
           </Pressable>
         )}
@@ -89,4 +94,8 @@ const styles = StyleSheet.create({
   },
 });
 
+
+function delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}
 
