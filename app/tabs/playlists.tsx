@@ -1,9 +1,26 @@
-import { Button, StyleSheet, View } from 'react-native';
+import { Button, NativeModules, StyleSheet, View } from 'react-native';
 
 export default function PlaylistsScreen() {
+  // Example button handler
+const onPickFilePress = () => {
+  pickPlaylistFile('somePlaylistId');
+};
+
+  const { PlaylistFilesModule } = NativeModules;
+
+  async function pickPlaylistFile(playlistId) {
+  try {
+    const uri = await PlaylistFilesModule.getPlaylistFiles(playlistId);
+    console.log('Picked file URI:', uri);
+  } catch (error) {
+    console.error('Error picking playlist file:', error);
+  }
+
+
+}
   return (
     <View  style={styles.container} >
-      <Button onPress={() => { console.log("Test"); } } title={"+ Import playlist"}></Button>
+      <Button onPress={() => { onPickFilePress() } } title={"+ Import playlist"}></Button>
     </View>
   );
 }
