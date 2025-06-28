@@ -1,18 +1,24 @@
 import SongCard from '@/components/SongCards';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { FlatList, NativeModules, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, FlatList, NativeModules, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import type { MusicFile, MusicFilesModule } from '../types/MusicFiles';
 import { usePlayback } from './PlaybackContext';
 
 
 export default function SongsScreen() {
+  const ScreenWidth = Dimensions.get('window').width - 20
   const { MusicFiles } = NativeModules as { MusicFiles: MusicFilesModule };
   const navigation = useNavigation();
   const [isThereSongs, setIsThereSongs] = useState(false);
   const { setCurrentSong } = usePlayback();
-  const {setAudioSource} = usePlayback();
+  const { setAudioSource } = usePlayback();
   const { player, isPlaying, setIsPlaying } = usePlayback();
+  const [text, setText] = useState('');
+
+
+  
+
 
   const handlePlay = async (song) => {
     console.log(song.duration);
@@ -44,11 +50,20 @@ export default function SongsScreen() {
 
   if (isThereSongs) {
     content = <>
+      <View style={styles.topBar}>
+        <TextInput
+          value={text}
+          onChangeText={setText}
+        placeholder="Search"
+        style={[styles.searchBar, { width: Dimensions.get('window').width - 75 }]}
+        placeholderTextColor='black'
+        />
+      </View>
       <FlatList
         data={songs}
         key={songs.id}
         renderItem={({ item }) => (
-          <Pressable onPress={() => { handlePlay(item);}}>
+          <Pressable onPress={() => { handlePlay(item); }}>
             <SongCard song={item} />
           </Pressable>
         )}
@@ -92,10 +107,18 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 20
   },
+  searchBar: {
+    backgroundColor: '#ffffff',
+    borderRadius: 5,
+    marginBottom: 5,
+  },
+  topBar: {
+    flexDirection: "row"
+  }
 });
 
 
 function delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
