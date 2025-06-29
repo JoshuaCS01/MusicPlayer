@@ -1,7 +1,8 @@
 import SongCard from '@/components/SongCards';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, FlatList, NativeModules, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Dimensions, FlatList, NativeModules, Pressable, StyleSheet, Text, View } from 'react-native';
+import SearchBar from "react-native-dynamic-search-bar";
 import type { MusicFile, MusicFilesModule } from '../types/MusicFiles';
 import { usePlayback } from './PlaybackContext';
 
@@ -15,80 +16,100 @@ export default function SongsScreen() {
   const { setAudioSource } = usePlayback();
   const { player, isPlaying, setIsPlaying } = usePlayback();
   const [text, setText] = useState('');
+  const [fullList, setFullList] = useState<MusicFile[]>([]);
 
-
-  
-
-
-  const handlePlay = async (song) => {
-    console.log(song.duration);
-    setCurrentSong(song);
-    setAudioSource(song.path);
-    setIsPlaying(true);
-  };
-
-  const [songs, setSongs] = useState<MusicFile[]>([]);
-
-
-  useEffect(() => {
-    const fetchSongs = async () => {
-      try {
-        const result = await MusicFiles.getMusicFiles();
-        setSongs(result);
-        setIsThereSongs(true);
-      } catch (error) {
-        console.error('Error fetching songs:', error);
+   const handleOnChangeText = (text) => {
+    setText(text);
+    let tempText = text.toLowerCase()
+    let filteredList = fullList.filter((item) => { // search from a full list, and not from a previous search results list
+      if (item.title.toLowerCase().match(text) || item.artist.toLowerCase().match(text)) {
+        return item;
       }
-    };
-
-    fetchSongs();
-  }, []);
-
-
-
-  let content;
-
-  if (isThereSongs) {
-    content = <>
-      <View style={styles.topBar}>
-        <TextInput
-          value={text}
-          onChangeText={setText}
-        placeholder="Search"
-        style={[styles.searchBar, { width: Dimensions.get('window').width - 75 }]}
-        placeholderTextColor='black'
-        />
-      </View>
-      <FlatList
-        data={songs}
-        key={songs.id}
-        renderItem={({ item }) => (
-          <Pressable onPress={() => { handlePlay(item); }}>
-            <SongCard song={item} />
-          </Pressable>
-        )}
-      />
-
-
-    </>;
-
-  } else {
-    content = <>
-      <Text style={styles.text}>Loading songs ...</Text>
-    </>;
+    })
+    if (!text || text === '') {
+      setSongs(fullList)
+    }
+    else if (Array.isArray(filteredList)) {
+      setSongs(filteredList)
+    }
   }
 
-  const goToPlaylists = () => {
-    navigation.navigate('playlists');
+
+
+
+const handlePlay = async (song) => {
+  setCurrentSong(song);
+  setAudioSource(song.path);
+  setIsPlaying(true);
+};
+
+const [songs, setSongs] = useState<MusicFile[]>([]);
+
+
+useEffect(() => {
+  const fetchSongs = async () => {
+    try {
+      const result = await MusicFiles.getMusicFiles();
+      setSongs(result);
+      setIsThereSongs(true);
+      setFullList(result)
+    } catch (error) {
+      console.error('Error fetching songs:', error);
+    }
   };
 
-  return (
-    <View style={styles.container} >
-      {content}
+  fetchSongs();
+}, []);
+
+
+
+let content;
+
+if (isThereSongs) {
+  content = <>
+    <View style={styles.topBar}>
+      <SearchBar
+        fontColor="#c6c6c6"
+        iconColor="#c6c6c6"
+        shadowColor="#282828"
+        cancelIconColor="#c6c6c6"
+        backgroundColor="#ffffff"
+        placeholder="Search here"
+        onChangeText={(text) => handleOnChangeText(text)}
+        onSearchPress={() => console.log("Search Icon is pressed")}
+        onClearPress={() => handleOnChangeText("")}
+      />
     </View>
+    <FlatList
+      data={songs}
+      key={songs.id}
+      renderItem={({ item }) => (
+        <Pressable onPress={() => { handlePlay(item); }}>
+          <SongCard song={item} />
+        </Pressable>
+      )}
+    />
 
 
-  );
+  </>;
+
+} else {
+  content = <>
+    <Text style={styles.text}>Loading songs ...</Text>
+  </>;
+}
+
+const goToPlaylists = () => {
+  navigation.navigate('playlists');
+};
+
+return (
+  <View style={styles.container} >
+    {content}
+  </View>
+
+
+);
 }
 
 const styles = StyleSheet.create({
@@ -113,7 +134,8 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   topBar: {
-    flexDirection: "row"
+    flexDirection: "row",
+    marginBottom: 10
   }
 });
 

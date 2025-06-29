@@ -15,6 +15,12 @@ export const PlaybackProvider = ({ children }) => {
     useEffect(() => {
     if (player && isPlaying) {
       player.play()
+      console.log("Playing audio");
+      if (currentSong) {
+        console.log(currentSong.path);
+      }
+    }
+    if(player.currentTime < player.duration) {
     }
   }, [player, isPlaying]);
 

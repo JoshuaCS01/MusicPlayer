@@ -1,5 +1,6 @@
 // types/MusicFiles.d.ts (or at the top of your .tsx file)
 export interface MusicFile {
+  id: number
   title: string;
   artist: string;
   duration: number;
