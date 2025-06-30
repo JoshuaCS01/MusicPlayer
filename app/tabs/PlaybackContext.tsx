@@ -17,9 +17,25 @@ export const PlaybackProvider = ({ children }) => {
   useEffect(() => {
     if (player && isPlaying) {
       player.play()
+      console.log(currentSong.path);
     }
 
   }, [player, isPlaying]);
+
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    if (player && player.duration > 0 && player.currentTime >= player.duration) {
+      console.log('Next song');
+      nextSong();
+    }
+  }, 1000); // check every second
+
+  return () => clearInterval(interval);
+}, [player]);
+
+
+
 
   const onTogglePlay = () => {
     if (player.playing) {

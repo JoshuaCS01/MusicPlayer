@@ -1,3 +1,4 @@
+import * as FileSystem from 'expo-file-system';
 import { Button, NativeModules, StyleSheet, View } from 'react-native';
 
 export default function PlaylistsScreen() {
@@ -12,6 +13,14 @@ const onPickFilePress = () => {
   try {
     const uri = await PlaylistFilesModule.getPlaylistFiles(playlistId);
     console.log('Picked file URI:', uri);
+    const fileContent = await FileSystem.readAsStringAsync(uri);
+    const lines = fileContent.split(/\r?\n/);
+
+    lines.forEach(line => {
+      console.log('Line:', line);
+      console.log('test');
+    });
+     
   } catch (error) {
     console.error('Error picking playlist file:', error);
   }

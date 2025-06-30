@@ -63,6 +63,13 @@ useEffect(() => {
 
 
 let content;
+let blankSpot;
+
+if(isPlaying){
+  blankSpot = <View style={{ height: 70 }}></View>;
+} else{
+  blankSpot = <></>;
+}
 
 if (isThereSongs) {
   content = <>
@@ -88,8 +95,6 @@ if (isThereSongs) {
         </Pressable>
       )}
     />
-    <View style={{height: "70"}}></View>
-
   </>;
 
 } else {
@@ -105,6 +110,7 @@ const goToPlaylists = () => {
 return (
   <View style={styles.container} >
     {content}
+    {blankSpot}
   </View>
 
 
