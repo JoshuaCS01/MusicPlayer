@@ -2,7 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export default function CurrentlyPlayingCard({ song, isPlaying, onTogglePlay }) {
+export default function CurrentlyPlayingCard({ song, isPlaying, onTogglePlay, nextSong, previousSong }) {
   const insets = useSafeAreaInsets();
   const width = insets.bottom + 60;
   if (!song) return null;
@@ -19,7 +19,7 @@ export default function CurrentlyPlayingCard({ song, isPlaying, onTogglePlay }) 
         <Text style={styles.artist}>{song.artist}</Text>
       </View>
       <View style={styles.selections}>
-        <Pressable onPress={onTogglePlay}>
+        <Pressable onPress={previousSong}>
           <Ionicons name="play-skip-back" size={28} color="white" />
         </Pressable>
         <Pressable onPress={onTogglePlay}>
@@ -27,7 +27,7 @@ export default function CurrentlyPlayingCard({ song, isPlaying, onTogglePlay }) 
             size={28} color="white"
           />
         </Pressable>
-        <Pressable onPress={onTogglePlay}>
+        <Pressable onPress={nextSong}>
           <Ionicons name="play-skip-forward" size={28} color="white" />
         </Pressable>
       </View>

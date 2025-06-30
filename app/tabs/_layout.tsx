@@ -34,13 +34,13 @@ function LogoTitle() {
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets();
-  const { currentSong, isPlaying, onTogglePlay } = usePlayback();
+  const { currentSong, isPlaying, onTogglePlay, nextSong, previousSong } = usePlayback();
 
   let content;
 
   if (isPlaying || currentSong != null) {
     content = <>
-      <CurrentlyPlayingCard song={currentSong} isPlaying={isPlaying} onTogglePlay={onTogglePlay} />
+      <CurrentlyPlayingCard song={currentSong} isPlaying={isPlaying} onTogglePlay={onTogglePlay} nextSong={nextSong} previousSong={previousSong}/>
     </>;
 
   } else {

@@ -1,6 +1,7 @@
 // PlaybackContext.tsx
 import { useAudioPlayer } from "expo-audio";
 import { createContext, useContext, useEffect, useState } from 'react';
+import { MusicFile } from "../types/MusicFiles";
 
 const PlaybackContext = createContext(null);
 
@@ -9,34 +10,56 @@ export const PlaybackProvider = ({ children }) => {
   const [audioSource, setAudioSource] = useState(null);
   const [currentSong, setCurrentSong] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [songs, setSongs] = useState<MusicFile[]>([]);
 
   const player = useAudioPlayer(audioSource);
 
-    useEffect(() => {
+  useEffect(() => {
     if (player && isPlaying) {
       player.play()
-      console.log("Playing audio");
-      if (currentSong) {
-        console.log(currentSong.path);
-      }
     }
-    if(player.currentTime < player.duration) {
-    }
+
   }, [player, isPlaying]);
 
   const onTogglePlay = () => {
-      if (isPlaying) {
-        player.pause();
-      } else {
-        player.play();
-      }
+    if (player.playing) {
+      player.pause();
+    } else {
+      player.play();
+    }
     setIsPlaying(prev => !prev);
-      console.log("ButtonPressed");
+    console.log(player.playing)
+    console.log("ButtonPressed");
+  };
+
+  const nextSong = () => {
+    const currentIndex = songs.findIndex(song => song.id === currentSong.id);
+    const nextIndex = currentIndex + 1;
+
+    if (nextIndex < songs.length) {
+      const next = songs[nextIndex];
+      setCurrentSong(next);
+      setAudioSource(next.path);
+      player.replace(next.path); // use next.path directlyz`
+    }
   };
 
 
+  const previousSong = () => {
+    const currentIndex = songs.findIndex(song => song.id === currentSong.id);
+    const previousIndex = currentIndex - 1;
+
+    if (previousIndex < songs.length) {
+      const prev = songs[previousIndex];
+      setCurrentSong(prev);
+      setAudioSource(prev.path);
+      player.replace(prev.path); // use next.path directlyz`
+    }
+  }
+
+
   return (
-    <PlaybackContext.Provider value={{ currentSong, setCurrentSong, isPlaying, onTogglePlay, audioSource, setAudioSource, player, setIsPlaying}}>
+    <PlaybackContext.Provider value={{ currentSong, setCurrentSong, isPlaying, onTogglePlay, audioSource, setAudioSource, player, setIsPlaying, nextSong, previousSong, songs, setSongs }}>
       {children}
     </PlaybackContext.Provider>
   );

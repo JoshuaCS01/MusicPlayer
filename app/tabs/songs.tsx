@@ -17,6 +17,7 @@ export default function SongsScreen() {
   const { player, isPlaying, setIsPlaying } = usePlayback();
   const [text, setText] = useState('');
   const [fullList, setFullList] = useState<MusicFile[]>([]);
+  const {songs, setSongs} = usePlayback();
 
    const handleOnChangeText = (text) => {
     setText(text);
@@ -42,8 +43,6 @@ const handlePlay = async (song) => {
   setAudioSource(song.path);
   setIsPlaying(true);
 };
-
-const [songs, setSongs] = useState<MusicFile[]>([]);
 
 
 useEffect(() => {
@@ -89,7 +88,7 @@ if (isThereSongs) {
         </Pressable>
       )}
     />
-
+    <View style={{height: "70"}}></View>
 
   </>;
 
