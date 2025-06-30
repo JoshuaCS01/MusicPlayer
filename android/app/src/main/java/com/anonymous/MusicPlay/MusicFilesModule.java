@@ -35,14 +35,17 @@ public class MusicFilesModule extends ReactContextBaseJavaModule {
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
 
+        int index = 0;
         Cursor cursor = resolver.query(uri, null, selection, null, null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 WritableMap song = Arguments.createMap();
+                song.putInt("id", index);
                 song.putString("title", cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
                 song.putString("artist", cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
                 song.putString("path", cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
                 songs.pushMap(song);
+                index++;
             } while (cursor.moveToNext());
 
             cursor.close();
